@@ -1,5 +1,3 @@
 module.exports = {
-  release: {
-    branches: ['main'],
-  },
+  branches: ['main'],
 };
