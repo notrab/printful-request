@@ -1,0 +1,18 @@
+{
+  "name": "printful-request",
+  "version": "0.0.0-semantic-release",
+  "description": "Simple request wrapper for Printful, with authorization management.",
+  "main": "index.js",
+  "repository": "notrab/printful-request",
+  "author": "Jamie Barton <jamie@notrab.dev>",
+  "license": "MIT",
+  "keywords": [
+    "printful",
+    "dropshipping",
+    "commerce",
+    "request"
+  ],
+  "dependencies": {
+    "cross-fetch": "3.0.6"
+  }
+}
