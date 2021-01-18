@@ -1,30 +1,38 @@
-require("cross-fetch/polyfill");
+require('cross-fetch/polyfill');
 
 class PrintfulClient {
   constructor(apiKey, options = {}) {
-    if (!apiKey) throw new Error("No API key provided");
+    if (!apiKey) throw new Error('No API key provided');
 
     const { headers } = options;
 
     this.apiKey = apiKey;
 
     this.options = {
-      baseUrl: "https://api.printful.com",
+      baseUrl: 'https://api.printful.com',
       ...options,
     };
 
     this.headers = {
-      "Content-Type": "application/json",
-      Authorization: `Basic ${Buffer.from(apiKey).toString("base64")}`,
+      'Content-Type': 'application/json',
+      Authorization: `Basic ${Buffer.from(apiKey).toString('base64')}`,
       ...headers,
     };
   }
 
-  async request({ method, endpoint, data }) {
+  async request({ method, endpoint, data, params = {} }) {
     const { baseUrl } = this.options;
     const headers = this.headers;
 
-    const url = `${baseUrl}/${endpoint}`;
+    const queryString = Object.keys(params).length
+      ? `?${Object.keys(params)
+          .map(
+            (k) => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`
+          )
+          .join('&')}`
+      : '';
+
+    const url = `${baseUrl}/${endpoint}${queryString}`;
 
     const response = await fetch(url, {
       headers,
@@ -44,15 +52,15 @@ class PrintfulClient {
   }
 
   post(endpoint, data) {
-    return this.request({ method: "POST", endpoint, data });
+    return this.request({ method: 'POST', endpoint, data });
   }
 
   put(endpoint, data) {
-    return this.request({ method: "PUT", endpoint, data });
+    return this.request({ method: 'PUT', endpoint, data });
   }
 
   delete(endpoint) {
-    return this.request({ method: "DELETE", endpoint });
+    return this.request({ method: 'DELETE', endpoint });
   }
 }
 
@@ -62,4 +70,7 @@ async function request(endpoint, { apiKey, ...rest }) {
   return client.request({ endpoint, ...rest });
 }
 
-export { PrintfulClient, request };
+module.exports = {
+  PrintfulClient,
+  request,
+};
