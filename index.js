@@ -1,21 +1,21 @@
-require('cross-fetch/polyfill');
+require("cross-fetch/polyfill");
 
 class PrintfulClient {
   constructor(apiKey, options = {}) {
-    if (!apiKey) throw new Error('No API key provided');
+    if (!apiKey) throw new Error("No API key provided");
 
     const { headers } = options;
 
     this.apiKey = apiKey;
 
     this.options = {
-      baseUrl: 'https://api.printful.com',
+      baseUrl: "https://api.printful.com",
       ...options,
     };
 
     this.headers = {
-      'Content-Type': 'application/json',
-      Authorization: `Basic ${Buffer.from(apiKey).toString('base64')}`,
+      "Content-Type": "application/json",
+      Authorization: `Basic ${Buffer.from(apiKey).toString("base64")}`,
       ...headers,
     };
   }
@@ -46,15 +46,15 @@ class PrintfulClient {
   }
 
   post(endpoint, data) {
-    return this.request({ method: 'POST', endpoint, data });
+    return this.request({ method: "POST", endpoint, data });
   }
 
   put(endpoint, data) {
-    return this.request({ method: 'PUT', endpoint, data });
+    return this.request({ method: "PUT", endpoint, data });
   }
 
   delete(endpoint) {
-    return this.request({ method: 'DELETE', endpoint });
+    return this.request({ method: "DELETE", endpoint });
   }
 }
 
