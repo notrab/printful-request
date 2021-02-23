@@ -20,11 +20,13 @@ class PrintfulClient {
     };
   }
 
-  async request({ method, endpoint, data }) {
+  async request({ method, endpoint, data, params = {} }) {
     const { baseUrl } = this.options;
     const headers = this.headers;
 
-    const url = `${baseUrl}/${endpoint}`;
+    const url = new URL(`${baseUrl}/${endpoint}`);
+
+    if (Object.keys(params)) url.search(new URLSearchParams(params));
 
     const response = await fetch(url, {
       headers,
@@ -62,4 +64,7 @@ async function request(endpoint, { apiKey, ...rest }) {
   return client.request({ endpoint, ...rest });
 }
 
-export { PrintfulClient, request };
+module.exports = {
+  PrintfulClient,
+  request,
+};
