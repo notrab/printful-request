@@ -23,10 +23,16 @@ class PrintfulClient {
   async request({ method, endpoint, data, params = {} }) {
     const { baseUrl } = this.options;
     const headers = this.headers;
+    
+    const queryString = Object.keys(params).length
+      ? `?${Object.keys(params)
+          .map(
+            (k) => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`
+          )
+          .join('&')}`
+      : '';
 
-    const url = new URL(`${baseUrl}/${endpoint}`);
-
-    if (Object.keys(params)) url.search(new URLSearchParams(params));
+    const url = `${baseUrl}/${endpoint}${queryString}`;
 
     const response = await fetch(url, {
       headers,
