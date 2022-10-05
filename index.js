@@ -1,12 +1,12 @@
 require("cross-fetch/polyfill");
 
 class PrintfulClient {
-  constructor(apiKey, options = {}) {
-    if (!apiKey) throw new Error("No API key provided");
+  constructor(token, options = {}) {
+    if (!token) throw new Error("No API key provided");
 
     const { headers } = options;
 
-    this.apiKey = apiKey;
+    this.token = token;
 
     this.options = {
       baseUrl: "https://api.printful.com",
@@ -15,7 +15,7 @@ class PrintfulClient {
 
     this.headers = {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`,
+      Authorization: `Bearer ${token}`,
       ...headers,
     };
   }
@@ -64,8 +64,8 @@ class PrintfulClient {
   }
 }
 
-async function request(endpoint, { apiKey, ...rest }) {
-  const client = new PrintfulClient(apiKey);
+async function request(endpoint, { token, ...rest }) {
+  const client = new PrintfulClient(token);
 
   return client.request({ endpoint, ...rest });
 }

@@ -9,14 +9,14 @@ Simple Node.js request wrapper for Printful, with authorization management. **No
 ```js
 const { PrintfulClient, request } = require("printful-request");
 
-const printful = new PrintfulClient("PRINTFUL_API_KEY");
+const printful = new PrintfulClient("PRINTFUL_API_TOKEN");
 
 printful.get("orders").then(({ result }) => console.log(result));
 
 // Or with a simple request
 
 request("orders", {
-  apiKey: "PRINTFUL_API_KEY",
+  token: "PRINTFUL_API_TOKEN",
   params: { limit: 1 },
 }).then(({ result }) => console.log(result));
 ```
@@ -30,13 +30,13 @@ Refer to the [Printful API Documentation](https://www.printful.com/docs) for pos
 ```js
 const { PrintfulClient, request } = require("printful-request");
 
-const printful = new PrintfulClient("PRINTFUL_API_KEY");
+const printful = new PrintfulClient("PRINTFUL_API_TOKEN");
 
 printful.get("orders").then(({ result }) => console.log(result));
 
 // or using request
 
-request("orders", { apiKey: "PRINTFUL_API_KEY" }).then(({ result }) =>
+request("orders", { token: "PRINTFUL_API_TOKEN" }).then(({ result }) =>
   console.log(result)
 );
 ```
@@ -46,7 +46,7 @@ request("orders", { apiKey: "PRINTFUL_API_KEY" }).then(({ result }) =>
 ```js
 const { PrintfulClient, request } = require("printful-request");
 
-const printful = new PrintfulClient("PRINTFUL_API_KEY");
+const printful = new PrintfulClient("PRINTFUL_API_TOKEN");
 
 printful
   .get("orders", { limit: 5, offset: 10 })
@@ -55,7 +55,7 @@ printful
 // or using request
 
 request("orders", {
-  apiKey: "PRINTFUL_API_KEY",
+  token: "PRINTFUL_API_TOKEN",
   params: { limit: 5, offset: 10 },
 }).then(({ result }) => console.log(result));
 ```
@@ -65,7 +65,7 @@ request("orders", {
 ```js
 const { PrintfulClient, request } = require("printful-request");
 
-const printful = new PrintfulClient("PRINTFUL_API_KEY");
+const printful = new PrintfulClient("PRINTFUL_API_TOKEN");
 
 printful
   .get("orders/estimate-costs", {
@@ -77,7 +77,7 @@ printful
 // or using request
 
 request("orders/estimate-costs", {
-  apiKey: "PRINTFUL_API_KEY",
+  token: "PRINTFUL_API_TOKEN",
   params: { recipient: { name: "..." }, items: [{ id: "..." }] },
 }).then(({ result }) => console.log(result));
 ```
@@ -87,7 +87,7 @@ request("orders/estimate-costs", {
 ```js
 const { PrintfulClient, request } = require("printful-request");
 
-const printful = new PrintfulClient("PRINTFUL_API_KEY");
+const printful = new PrintfulClient("PRINTFUL_API_TOKEN");
 
 printful
   .get("orders/{id}", {
@@ -99,7 +99,7 @@ printful
 // or using request
 
 request("orders/{id}", {
-  apiKey: "PRINTFUL_API_KEY",
+  token: "PRINTFUL_API_TOKEN",
   params: { id: "...", confirm: true },
 }).then(({ result }) => console.log(result));
 ```
@@ -109,14 +109,14 @@ request("orders/{id}", {
 ```js
 const { PrintfulClient, request } = require("printful-request");
 
-const printful = new PrintfulClient("PRINTFUL_API_KEY");
+const printful = new PrintfulClient("PRINTFUL_API_TOKEN");
 
 printful.delete("orders/{id}").then(({ result }) => console.log(result));
 
 // or using request
 
 request("orders/{id}", {
-  apiKey: "PRINTFUL_API_KEY",
+  token: "PRINTFUL_API_TOKEN",
   method: "DELETE",
 }).then(({ result }) => console.log(result));
 ```
