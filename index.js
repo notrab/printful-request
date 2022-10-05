@@ -15,7 +15,7 @@ class PrintfulClient {
 
     this.headers = {
       "Content-Type": "application/json",
-      Authorization: `Basic ${Buffer.from(apiKey).toString("base64")}`,
+      Authorization: `Bearer ${apiKey}`,
       ...headers,
     };
   }
@@ -23,14 +23,14 @@ class PrintfulClient {
   async request({ method, endpoint, data, params = {} }) {
     const { baseUrl } = this.options;
     const headers = this.headers;
-    
+
     const queryString = Object.keys(params).length
       ? `?${Object.keys(params)
           .map(
             (k) => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`
           )
-          .join('&')}`
-      : '';
+          .join("&")}`
+      : "";
 
     const url = `${baseUrl}/${endpoint}${queryString}`;
 
