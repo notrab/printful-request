@@ -2,6 +2,8 @@
 
 Simple Node.js request wrapper for Printful, with authorization management. **Not to be used client-side**.
 
+**VERSION 2.0 USERS:** You will want to use Printful API Tokens, and **NOT** API KEYS. [Read migration guide](https://help.printful.com/hc/en-us/articles/4632388335260-What-should-I-know-about-API-key-to-API-token-migration).
+
 ## Quickstart
 
 ```js
