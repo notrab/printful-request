@@ -6,7 +6,6 @@ interface PrintfulClientOptions {
 }
 
 export class PrintfulClient {
-  private token: string;
   private readonly options: PrintfulClientOptions;
   private headers: any;
 
@@ -14,8 +13,6 @@ export class PrintfulClient {
     if (!token) throw new Error("No API key provided");
 
     const { headers } = options;
-
-    this.token = token;
 
     this.options = {
       baseUrl: "https://api.printful.com",
@@ -35,10 +32,10 @@ export class PrintfulClient {
     data,
     params = {},
   }: {
-    method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+    method?: "GET" | "POST" | "PUT" | "DELETE";
     endpoint: string;
     data?: RequestBody;
-    params?: any;
+    params?: { [key: string]: string };
   }): Promise<ResponseBody> {
     const { baseUrl } = this.options;
     const headers = this.headers;
@@ -67,32 +64,32 @@ export class PrintfulClient {
   }
 
   get<ResponseBody>(endpoint: string, params?: any): Promise<ResponseBody> {
-    return this.request<ResponseBody, ResponseBody>({ endpoint, params });
+    return this.request<void, ResponseBody>({ endpoint, params });
   }
 
   post<RequestBody, ResponseBody>(
     endpoint: string,
     data: RequestBody
   ): Promise<ResponseBody> {
-    return this.request<ResponseBody, ResponseBody>({
+    return this.request<RequestBody, ResponseBody>({
       method: "POST",
       endpoint,
       data,
     });
   }
 
-  put<ResponseBody, RequestBody>(
+  put<RequestBody, ResponseBody>(
     endpoint: string,
     data: RequestBody
   ): Promise<ResponseBody> {
-    return this.request<ResponseBody, ResponseBody>({
+    return this.request<RequestBody, ResponseBody>({
       method: "PUT",
       endpoint,
       data,
     });
   }
 
-  delete<ResponseBody, RequestBody>(endpoint: string): Promise<ResponseBody> {
+  delete<RequestBody, ResponseBody>(endpoint: string): Promise<ResponseBody> {
     return this.request<RequestBody, ResponseBody>({
       method: "DELETE",
       endpoint,
@@ -102,7 +99,7 @@ export class PrintfulClient {
 
 export async function request<RequestBody, ResponseBody>(
   endpoint: string,
-  { token, ...rest }: PrintfulClientOptions
+  { token, ...rest }: { token: string } & PrintfulClientOptions
 ) {
   const client = new PrintfulClient(token);
 
