@@ -6,6 +6,9 @@
   "repository": "notrab/printful-request",
   "author": "Jamie Barton <jamie@notrab.dev>",
   "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  },
   "keywords": [
     "printful",
     "dropshipping",
