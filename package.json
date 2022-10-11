@@ -2,7 +2,7 @@
   "name": "printful-request",
   "version": "0.0.0-semantic-release",
   "description": "Simple request wrapper for Printful, with authorization management.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "repository": "notrab/printful-request",
   "author": "Jamie Barton <jamie@notrab.dev>",
   "license": "MIT",
@@ -14,5 +14,8 @@
   ],
   "dependencies": {
     "cross-fetch": "3.1.5"
+  },
+  "devDependencies": {
+    "typescript": "4.8.4"
   }
 }
