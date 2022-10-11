@@ -9,4 +9,5 @@ client
 client.post<{ name: string; price: number }, { name: string }>("test", {
   name: "hi",
   price: 3,
+  g: hi,
 });

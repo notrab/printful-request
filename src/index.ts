@@ -2,13 +2,15 @@ import "cross-fetch/polyfill";
 
 interface PrintfulClientOptions {
   headers?: any;
+  baseUrl?: string;
 }
 
 export class PrintfulClient {
-  constructor(
-    private token: string,
-    private readonly options: PrintfulClientOptions = {}
-  ) {
+  private token: string;
+  private readonly options: PrintfulClientOptions;
+  private headers: any;
+
+  constructor(token: string, options: PrintfulClientOptions = {}) {
     if (!token) throw new Error("No API key provided");
 
     const { headers } = options;
@@ -27,17 +29,17 @@ export class PrintfulClient {
     };
   }
 
-  async request<T>({
+  async request<RequestBody, ResponseBody>({
     method,
     endpoint,
     data,
     params = {},
   }: {
-    method: any;
+    method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
     endpoint: string;
-    data?: T;
+    data?: RequestBody;
     params?: any;
-  }): Promise<T> {
+  }): Promise<ResponseBody> {
     const { baseUrl } = this.options;
     const headers = this.headers;
 
@@ -65,30 +67,44 @@ export class PrintfulClient {
   }
 
   get<ResponseBody>(endpoint: string, params?: any): Promise<ResponseBody> {
-    return this.request({ endpoint, params });
+    return this.request<ResponseBody, ResponseBody>({ endpoint, params });
   }
 
   post<RequestBody, ResponseBody>(
     endpoint: string,
     data: RequestBody
   ): Promise<ResponseBody> {
-    return this.request<RequestBody>({ method: "POST", endpoint, data });
+    return this.request<ResponseBody, ResponseBody>({
+      method: "POST",
+      endpoint,
+      data,
+    });
   }
 
-  put<ResponseBody, RequestBody>(endpoint: string, data: ResponseBody) {
-    return this.request<RequestBody>({ method: "PUT", endpoint, data });
+  put<ResponseBody, RequestBody>(
+    endpoint: string,
+    data: RequestBody
+  ): Promise<ResponseBody> {
+    return this.request<ResponseBody, ResponseBody>({
+      method: "PUT",
+      endpoint,
+      data,
+    });
   }
 
-  delete<ResponseBody>(endpoint: string) {
-    return this.request<ResponseBody>({ method: "DELETE", endpoint });
+  delete<ResponseBody, RequestBody>(endpoint: string): Promise<ResponseBody> {
+    return this.request<RequestBody, ResponseBody>({
+      method: "DELETE",
+      endpoint,
+    });
   }
 }
 
-export async function request<T>(
+export async function request<RequestBody, ResponseBody>(
   endpoint: string,
   { token, ...rest }: PrintfulClientOptions
 ) {
   const client = new PrintfulClient(token);
 
-  return client.request<T>({ endpoint, ...rest });
+  return client.request<RequestBody, ResponseBody>({ endpoint, ...rest });
 }
