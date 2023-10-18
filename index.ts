@@ -1,13 +1,28 @@
-require("cross-fetch/polyfill");
+import "cross-fetch/polyfill";
+
+interface Options {
+  baseUrl?: string;
+  headers?: Record<string, string>;
+}
+
+interface RequestParams {
+  method?: string;
+  endpoint: string;
+  data?: any;
+  params?: Record<string, string | number>;
+}
 
 class PrintfulClient {
-  constructor(token, options = {}) {
+  token: string;
+  options: Options;
+  headers: Record<string, string>;
+
+  constructor(token: string, options: Options = {}) {
     if (!token) throw new Error("No API key provided");
 
     const { headers } = options;
 
     this.token = token;
-
     this.options = {
       baseUrl: "https://api.printful.com",
       ...options,
@@ -20,7 +35,7 @@ class PrintfulClient {
     };
   }
 
-  async request({ method, endpoint, data, params = {} }) {
+  async request({ method, endpoint, data, params = {} }: RequestParams) {
     const { baseUrl } = this.options;
     const headers = this.headers;
 
@@ -47,30 +62,38 @@ class PrintfulClient {
     return json;
   }
 
-  get(endpoint, params) {
+  get(endpoint: string, params?: Record<string, string | number>) {
     return this.request({ endpoint, params });
   }
 
-  post(endpoint, data) {
+  post(endpoint: string, data: any) {
     return this.request({ method: "POST", endpoint, data });
   }
 
-  put(endpoint, data) {
+  put(endpoint: string, data: any) {
     return this.request({ method: "PUT", endpoint, data });
   }
 
-  delete(endpoint) {
+  delete(endpoint: string) {
     return this.request({ method: "DELETE", endpoint });
   }
 }
 
-async function request(endpoint, { token, ...rest }) {
+async function request(
+  endpoint: string,
+  {
+    token,
+    ...rest
+  }: {
+    token: string;
+    method?: string;
+    data?: any;
+    params?: Record<string, string | number>;
+  }
+) {
   const client = new PrintfulClient(token);
 
   return client.request({ endpoint, ...rest });
 }
 
-module.exports = {
-  PrintfulClient,
-  request,
-};
+export { PrintfulClient, request };

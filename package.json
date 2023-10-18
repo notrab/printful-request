@@ -2,7 +2,6 @@
   "name": "printful-request",
   "version": "0.0.0-semantic-release",
   "description": "Simple request wrapper for Printful, with authorization management.",
-  "main": "index.js",
   "repository": "notrab/printful-request",
   "author": "Jamie Barton <jamie@notrab.dev>",
   "license": "MIT",
@@ -14,5 +13,34 @@
   ],
   "dependencies": {
     "cross-fetch": "3.1.5"
+  },
+  "devDependencies": {
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2"
+  },
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": {
+        "node": "./dist/index.js",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "node": "./dist/index.cjs",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch --clean=false"
   }
 }
