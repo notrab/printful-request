@@ -1,15 +1,24 @@
 name: Release
 on: push
 jobs:
-  test:
-    runs-on: ubuntu-16.04
+  build:
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
         with:
-          node-version: "12"
+          node-version: "14"
       - run: npm install
       - run: npm run build
+  release:
+    needs: build
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - run: npm install
       - name: Release
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
