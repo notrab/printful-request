@@ -1,21 +1,16 @@
 name: Release
-on:
-  push:
-    branches:
-      - main
+on: push
 jobs:
-  release:
-    name: Release
-    runs-on: ubuntu-20.04
+  test:
+    runs-on: ubuntu-16.04
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Install dependencies
-        run: npm install
-      - name: Build dist
-        run: npm run build
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "12"
+      - run: npm install
+      - run: npm run build
       - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npx -p node@lts -c "npx semantic-release"
+        run: npx semantic-release

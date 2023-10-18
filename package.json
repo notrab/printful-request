@@ -1,6 +1,6 @@
 {
   "name": "printful-request",
-  "version": "0.0.0-semantic-release",
+  "version": "0.0.0-development",
   "description": "Simple request wrapper for Printful, with authorization management.",
   "repository": "notrab/printful-request",
   "author": "Jamie Barton <jamie@notrab.dev>",
@@ -16,7 +16,8 @@
   },
   "devDependencies": {
     "tsup": "^7.2.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "semantic-release": "^22.0.5"
   },
   "type": "module",
   "main": "./dist/index.cjs",
@@ -41,6 +42,7 @@
   ],
   "scripts": {
     "build": "tsup",
-    "dev": "tsup --watch --clean=false"
+    "dev": "tsup --watch --clean=false",
+    "semantic-release": "semantic-release"
   }
 }
