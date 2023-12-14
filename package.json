@@ -12,12 +12,12 @@
     "request"
   ],
   "dependencies": {
-    "cross-fetch": "3.1.5"
+    "whatwg-fetch": "^3.6.20"
   },
   "devDependencies": {
+    "semantic-release": "^22.0.5",
     "tsup": "^7.2.0",
-    "typescript": "^5.2.2",
-    "semantic-release": "^22.0.5"
+    "typescript": "^5.2.2"
   },
   "type": "module",
   "main": "./dist/index.cjs",

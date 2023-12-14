@@ -1,4 +1,4 @@
-import "cross-fetch/polyfill";
+import "whatwg-fetch";
 
 interface Options {
   baseUrl?: string;
